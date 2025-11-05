@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList</title>
+<!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="style/css/main.min.css">
+</head>
+<body>
+    <div class="app">
+        <section class="app__sidebar">
+
+            <nav class="menu">
+                <button type="button" class="button button--modal-task button--bg-hover button--accent" id="open-modal-task">
+                    <svg class="button__icon"><use href="#icon_add-task"></use></svg>
+                    <span class="button__text">Добавить задачу</span>
+                </button>
+<!--------------------- меню фильтров -------------------->
+                <ul class="menu__list">
+                    <li class="menu__item" js-tabs js-tabs-default data-type="tasks" data-name="Задачи"> 
+                        <div class="menu__content">
+                            <svg class="menu__icon"><use href="#icon_task"></use></svg>
+                            <span class="menu__text">Задачи</span>
+                        </div>
+                        <span class="menu__counter counter"></span>
+                    </li>
+                    <li class="menu__item" js-tabs data-type="today" data-name="Сегодня">
+                        <div class="menu__content">
+                            <svg class="menu__icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0,0,256,256">
+                                <g fill="#302f2f" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M12,0c-1.09375,0 -2,0.90625 -2,2v2h-6c-1.07031,0 -2,0.80469 -2,1.95703v40.25c0,0.57422 0.33203,1.12891 0.73438,1.41406c0.40234,0.28125 0.83984,0.37891 1.26563,0.37891h42c0.42578,0 0.86328,-0.09766 1.26563,-0.37891c0.40234,-0.28516 0.73438,-0.83984 0.73438,-1.41406v-40.25c0,-1.04687 -0.84766,-1.95703 -1.91797,-1.95703h-6.08203v-2c0,-1.09375 -0.90625,-2 -2,-2h-2c-1.09375,0 -2,0.90625 -2,2v2h-18v-2c0,-1.09375 -0.90625,-2 -2,-2zM12,2h2v6h-2zM36,2h2v6h-2zM4,6h6v2c0,1.09375 0.90625,2 2,2h2c1.09375,0 2,-0.90625 2,-2v-2h18v2c0,1.09375 0.90625,2 2,2h2c1.09375,0 2,-0.90625 2,-2v-2h6v7h-42zM4,15h42v31h-42zM32.70313,20.61719l-0.54297,0.83984l-8.14453,12.63672l-5.34375,-4.83594l-0.74219,-0.66797l-1.33984,1.48047l0.73828,0.67188l7.09375,6.41406l9.41797,-14.61328l0.54297,-0.83984z"></path></g></g>
+                            </svg>
+                            <span class="menu__text">Сегодня</span>
+                        </div>
+                        <span class="menu__counter counter"></span>
+                    </li>
+                    <li class="menu__item" js-tabs data-type="upcoming" data-name="Предстоящие">
+                        <div class="menu__content">
+                            <svg class="menu__icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0,0,256,256">
+                                <g fill="#302f2f" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M12,0c-1.09375,0 -2,0.90625 -2,2v2h-6c-1.09375,0 -2,0.90625 -2,2v17c-0.00391,0.35938 0.18359,0.69531 0.49609,0.87891c0.3125,0.17969 0.69531,0.17969 1.00781,0c0.3125,-0.18359 0.5,-0.51953 0.49609,-0.87891v-7h42v30h-42v-8c0.00391,-0.35937 -0.18359,-0.69531 -0.49609,-0.87891c-0.3125,-0.17969 -0.69531,-0.17969 -1.00781,0c-0.3125,0.18359 -0.5,0.51953 -0.49609,0.87891v8c0,1.09375 0.90625,2 2,2h42c1.09375,0 2,-0.90625 2,-2v-40c0,-1.09375 -0.90625,-2 -2,-2h-6v-2c0,-1.09375 -0.90625,-2 -2,-2h-2c-1.09375,0 -2,0.90625 -2,2v2h-18v-2c0,-1.09375 -0.90625,-2 -2,-2zM12,2h2v6h-2v-2.83203c0.01953,-0.10937 0.01953,-0.21875 0,-0.32422zM36,2h2v2.83203c-0.01953,0.10938 -0.01953,0.21875 0,0.32422v2.84375h-2zM4,6h6v2c0,1.09375 0.90625,2 2,2h2c1.09375,0 2,-0.90625 2,-2v-2h18v2c0,1.09375 0.90625,2 2,2h2c1.09375,0 2,-0.90625 2,-2v-2h6v8h-42zM16.8125,22.13672c-0.40625,-0.00781 -0.77734,0.23047 -0.94141,0.60156c-0.16016,0.375 -0.07812,0.80859 0.20703,1.10156l4.9375,5.16016h-18.01562c-0.35937,-0.00391 -0.69531,0.18359 -0.87891,0.49609c-0.17969,0.3125 -0.17969,0.69531 0,1.00781c0.18359,0.3125 0.51953,0.5 0.87891,0.49609h17.53516l-4.45703,4.66016c-0.38281,0.40234 -0.37109,1.03516 0.02734,1.41406c0.40234,0.38281 1.03516,0.37109 1.41406,-0.02734l5.84375,-6.10937c0.28906,-0.10937 0.50781,-0.33984 0.60156,-0.62891l0.53516,-0.55859l-6.97656,-7.29687c-0.18359,-0.19531 -0.44141,-0.3125 -0.71094,-0.31641z"></path></g></g>
+                            </svg>
+                            <span class="menu__text">Предстоящие</span>
+                        </div>
+                        <span class="menu__counter counter"></span>
+                    </li>
+                    <li class="menu__item" js-tabs data-type="priority" data-name="Приоритет">
+                        <div class="menu__content">
+                            <svg class="menu__icon" width="20" height="20"><use href="#icon_priority"></use></svg>
+                            <span class="menu__text">Приоритет</span>
+                        </div>
+                        <span class="menu__counter counter"></span>
+                    </li>
+                    <li class="menu__item" js-tabs data-type="completed" data-name="Выполнено">
+                        <div class="menu__content">
+                            <svg class="menu__icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"  viewBox="0,0,256,256">
+                                <g fill="#302f2f" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M11,4c-3.85547,0 -7,3.14453 -7,7v28c0,3.85547 3.14453,7 7,7h28c3.85547,0 7,-3.14453 7,-7v-28c0,-3.85547 -3.14453,-7 -7,-7zM11,6h28c2.77344,0 5,2.22656 5,5v28c0,2.77344 -2.22656,5 -5,5h-28c-2.77344,0 -5,-2.22656 -5,-5v-28c0,-2.77344 2.22656,-5 5,-5zM36.23438,15.83203l-13.32031,15.72266l-8.13281,-7.58594l-1.36328,1.46484l9.66406,9.01563l14.68359,-17.32422z"></path></g></g>
+                            </svg>
+                            <span class="menu__text">Выполнено</span>
+                        </div>
+                        <span class="menu__counter counter"></span>
+                    </li>
+                </ul>
+            </nav>
+<!--------------------- меню проектов -------------------->
+            <nav class="projects">
+
+                <div class="projects__actions">
+                    <h1 class="projects__title">Мои проекты</h1>
+
+                    <div class="projects__buttons">
+                        <button type="button" class="projects__button button button--add-project">
+                            <svg class="projects__icon"><use href="#icon_add-project"></use></svg>
+                        </button>
+
+                        <button type="button" class="projects__button button button--view-projects">
+                            <svg class="projects__icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                                <g fill="#302f2f" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M44.98828,13.98438c-0.26172,0.00781 -0.51172,0.11719 -0.69531,0.30859l-19.29297,19.29297l-19.29297,-19.29297c-0.1875,-0.19531 -0.44531,-0.30078 -0.71484,-0.30469c-0.41016,0.00391 -0.77344,0.25 -0.92969,0.625c-0.15234,0.37891 -0.0625,0.80859 0.23047,1.09375l20,20c0.39063,0.39063 1.02344,0.39063 1.41406,0l20,-20c0.29688,-0.28516 0.38672,-0.72656 0.23047,-1.10547c-0.16016,-0.37891 -0.53516,-0.625 -0.94922,-0.61719z"></path></g></g>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="projects__list">
+                    
+                </div>
+            </nav>
+
+        </section>
+<!--------------------- доска задач -------------------->
+        <main class="app__content">
+
+            <div class="app__breadcrumbs"></div>
+            <h1 class="app__title"></h1>
+
+            <section class="board"></section>
+            
+        </main>
+<!--------------------- модальное окно задачи -------------------->
+        <dialog class="modal" id="task-modal">
+            <form class="modal__form" id="modal__form" method="dialog">
+                <div class="modal__body">
+
+                    <div class="modal__content">
+                        <textarea class="field field-textarea" spellcheck="true" id="field-name" autofocus form="modal__form" rows="1" name="input-task" required placeholder="Название задачи" maxlength="1600"></textarea>
+                        <textarea class="field field-textarea" spellcheck="true" rows="1" form="modal__form" name="input-description" id="field-description" maxlength="5000" placeholder="Описание"></textarea>
+                    </div>
+
+                    <div class="modal__controls">
+
+                        <!-- срок (deadline) -->
+                        <div class="deadline field-deadline" id="deadline">
+
+                            <button type="button" id="deadline__button" class="deadline__button button button--view-datepicker">
+                                <svg class="deadline__icon"><use href="#icon_deadline"></use></svg>
+                                <span class="deadline__label">Срок</span>
+                                <span class="deadline__clear" aria-label="Очистить">✕</span>
+                            </button>
+
+                            <input type="text" id="due" name="input-date" class="deadline__input" hidden>
+                        </div>
+
+                        <!-- приоритет -->
+                        <label class="checkbox checkbox_flag" for="input-priority">
+                            <input class="checkbox__input visually-hidden" type="checkbox" name="isPriority" value="false" id="input-priority">
+                            <svg class="checkbox__icon checkbox__icon--outline" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">
+                                <path d="M 3 2 L 3 2.75 L 3 3.234375 L 3 15.505859 L 3 21.25 L 3 22 L 4.5 22 L 4.5 21.25 L 4.5 14.796875 C 5.0055015 14.572833 6.3707635 14.001953 7.875 14.001953 C 9.2603969 14.001953 10.126953 14.425781 11.158203 14.925781 C 12.189453 15.425781 13.385147 16.001953 15.09375 16.001953 C 17.389019 16.001953 20.472656 15.005859 20.472656 15.005859 L 21 14.841797 L 21 2.6699219 L 20.011719 3 C 20.011719 3 16.904053 4 15.09375 4 C 13.708353 4 12.84375 3.5742188 11.8125 3.0742188 C 10.78125 2.5742188 9.5836031 2 7.875 2 C 6.4795531 2 5.3365279 2.3278264 4.5 2.6269531 L 4.5 2 L 3 2 z M 7.875 3.5 C 9.2603969 3.5 10.126953 3.9257812 11.158203 4.4257812 C 12.189453 4.9257812 13.385147 5.5 15.09375 5.5 C 16.78256 5.5 18.490177 5.0247774 19.5 4.7148438 L 19.5 13.708984 C 18.798915 13.908389 16.651894 14.501953 15.09375 14.501953 C 13.708353 14.501953 12.84375 14.076172 11.8125 13.576172 C 10.78125 13.076172 9.5836031 12.501953 7.875 12.501953 C 6.4838019 12.501953 5.3404802 12.851535 4.5 13.173828 L 4.5 4.234375 C 5.0229937 4.0200517 6.3704333 3.5 7.875 3.5 z"></path>
+                            </svg>
+                            <svg class="checkbox__icon checkbox__icon--filled" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">
+                                <path d="M20.687,3.104c-0.195-0.143-0.447-0.181-0.676-0.103C19.981,3.011,17.008,4,15.094,4c-1.375,0-2.301-0.449-3.282-0.925	C10.772,2.571,9.594,2,7.875,2c-1.29,0-2.549,0.338-3.4,0.628C4.415,2.275,4.121,2,3.75,2C3.336,2,3,2.336,3,2.75v0.962v10.576	v6.962C3,21.664,3.336,22,3.75,22s0.75-0.336,0.75-0.75v-6.475C5.162,14.497,6.531,14,7.875,14c1.375,0,2.301,0.449,3.282,0.925	C12.196,15.429,13.375,16,15.094,16c2.151,0,5.248-0.955,5.379-0.996C20.786,14.907,21,14.616,21,14.288V3.712	C21,3.471,20.884,3.244,20.687,3.104z"></path>
+                            </svg>
+                            <span class="checkbox__label">Приоритет</span>
+                        </label>
+                    </div>
+                </div>
+
+<!--------------------- dropdown выбора расположения задачи ----------------->
+                <div class="modal__footer">
+                    <div class="modal__select select" name="folder">
+
+                        <button type="button" class="select__button button button--view-dropdown button--bg-hover" name="location-task">
+                            <div class="button__content content">
+                                <svg class="content__icon"><use href="#icon_task"></use></svg>
+                                <span class="content__text">Задачи</span>
+                            </div>
+                            <span class="button__arrow"></span>
+                        </button>
+
+                        <ul class="dropdown visually-hidden"></ul>
+                    </div>
+
+                    <div class="modal__actions">
+                        <button type="button" class="modal__button button--cancel" id="cancel-modal-task" data-modal="cancel">Отмена</button>
+                        <button class="modal__button modal__button--accent button--add-task" type="submit" disabled>Добавить задачу</button>
+                    </div>
+
+                </div>
+            </form>
+        </dialog>
+
+    </div>
+<!--------------------- svg components-------------------->
+    <svg style="display: none;">
+        <symbol id="icon_add-task" viewBox="0,0,256,256">
+            <g fill="#be2300" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M25,2c-12.683,0 -23,10.317 -23,23c0,12.683 10.317,23 23,23c12.683,0 23,-10.317 23,-23c0,-12.683 -10.317,-23 -23,-23zM37,26h-11v11h-2v-11h-11v-2h11v-11h2v11h11z"></path></g></g>
+        </symbol>
+    </svg>
+
+    <svg style="display: none;">
+        <symbol id="icon_add-project" viewBox="0 0 50 50">
+            <path d="M 24 9 L 24 24 L 9 24 L 9 26 L 24 26 L 24 41 L 26 41 L 26 26 L 41 26 L 41 24 L 26 24 L 26 9 Z"></path>
+        </symbol>
+    </svg>
+
+    <svg style="display: none;">
+        <symbol id="icon_add-section" viewBox="0 0 50 50">
+            <path d="M 8 3 L 8 4 L 8 47 L 42 47 L 42 3 L 8 3 z M 10 5 L 40 5 L 40 45 L 10 45 L 10 5 z M 14 9 L 14 11 L 36 11 L 36 9 L 14 9 z M 14 14 L 14 15 L 14 36 L 36 36 L 36 14 L 14 14 z M 16 16 L 34 16 L 34 34 L 16 34 L 16 16 z M 14 39 L 14 41 L 36 41 L 36 39 L 14 39 z"></path>
+        </symbol>
+    </svg>
+
+    <svg style="display: none;">
+        <symbol id="icon_menu-actions" viewBox="0 0 50 50">
+            <path d="M 9 19 C 5.699219 19 3 21.699219 3 25 C 3 28.300781 5.699219 31 9 31 C 12.300781 31 15 28.300781 15 25 C 15 21.699219 12.300781 19 9 19 Z M 25 19 C 21.699219 19 19 21.699219 19 25 C 19 28.300781 21.699219 31 25 31 C 28.300781 31 31 28.300781 31 25 C 31 21.699219 28.300781 19 25 19 Z M 41 19 C 37.699219 19 35 21.699219 35 25 C 35 28.300781 37.699219 31 41 31 C 44.300781 31 47 28.300781 47 25 C 47 21.699219 44.300781 19 41 19 Z M 9 21 C 11.222656 21 13 22.777344 13 25 C 13 27.222656 11.222656 29 9 29 C 6.777344 29 5 27.222656 5 25 C 5 22.777344 6.777344 21 9 21 Z M 25 21 C 27.222656 21 29 22.777344 29 25 C 29 27.222656 27.222656 29 25 29 C 22.777344 29 21 27.222656 21 25 C 21 22.777344 22.777344 21 25 21 Z M 41 21 C 43.222656 21 45 22.777344 45 25 C 45 27.222656 43.222656 29 41 29 C 38.777344 29 37 27.222656 37 25 C 37 22.777344 38.777344 21 41 21 Z"></path>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_priority" viewBox="0,0,256,256">
+            <g fill="#302f2f" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M13,0c-5.02344,0 -8.12109,0.49609 -10,1.03125c-0.94141,0.26563 -1.57812,0.55469 -2,0.78125c-0.13672,0.07422 -0.21094,0.15234 -0.3125,0.21875c-0.02344,0.01563 -0.07031,0.01563 -0.09375,0.03125c-0.10547,0.05469 -0.20312,0.12891 -0.28125,0.21875c-0.01172,0 -0.01953,0 -0.03125,0l-0.03125,0.0625c-0.03516,0.02734 -0.06641,0.05859 -0.09375,0.09375l-0.15625,0.125v0.25c-0.00391,0.04297 -0.00391,0.08203 0,0.125v46.0625c-0.00391,0.35938 0.18359,0.69531 0.49609,0.87891c0.3125,0.17969 0.69531,0.17969 1.00781,0c0.3125,-0.18359 0.5,-0.51953 0.49609,-0.87891v-18.34375c0.41797,-0.16797 1.04688,-0.40234 2.1875,-0.6875c1.90625,-0.48047 4.82813,-0.96875 8.8125,-0.96875c3.90234,0 6.79688,0.96094 10.3125,1.96875c3.51563,1.00781 7.60938,2.03125 13.6875,2.03125c7.02344,0 12.5,-3.125 12.5,-3.125l0.5,-0.28125v-27.28125l-1.46875,0.8125c-0.82031,0.44531 -5.51953,2.875 -11.53125,2.875c-4.77734,0 -8.10937,-1.40625 -11.625,-2.90625c-3.51562,-1.5 -7.21484,-3.09375 -12.375,-3.09375zM13,2c4.75391,0 8.07813,1.40625 11.59375,2.90625c3.51563,1.5 7.23047,3.09375 12.40625,3.09375c5.38281,0 9.11328,-1.59375 11,-2.5v22.84375c-0.68359,0.36719 -5.05078,2.65625 -11,2.65625c-5.85156,0 -9.6875,-0.97656 -13.15625,-1.96875c-3.46875,-0.99219 -6.61328,-2.03125 -10.84375,-2.03125c-4.14844,0 -7.21875,0.51172 -9.28125,1.03125c-1.11328,0.28125 -1.1875,0.38281 -1.71875,0.59375v-25.09375c0.28516,-0.14844 0.77344,-0.33984 1.5625,-0.5625c1.64063,-0.46484 4.54688,-0.96875 9.4375,-0.96875z"></path></g></g>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_task" viewBox="0,0,256,256">
+            <g fill="#302f2f" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M14,-0.0625c-0.05469,0.00781 -0.10547,0.01563 -0.15625,0.03125c-0.01953,0.00781 -0.04297,0.01953 -0.0625,0.03125c-0.25781,0.05859 -0.48437,0.21484 -0.625,0.4375l-7.25,10.875l-4.125,-4.9375c-0.34375,-0.43359 -0.97656,-0.5 -1.40625,-0.15625c-0.43359,0.34375 -0.5,0.97656 -0.15625,1.40625l5,6c0.19922,0.25391 0.50781,0.39844 0.82813,0.38672c0.32422,-0.01172 0.62109,-0.17969 0.79688,-0.44922l8,-12c0.25,-0.30859 0.29297,-0.73437 0.10938,-1.08594c-0.18359,-0.35547 -0.55859,-0.56641 -0.95312,-0.53906zM20,7v2h30v-2zM14,16.9375c-0.05469,0.00781 -0.10547,0.01563 -0.15625,0.03125c-0.01953,0.00781 -0.04297,0.01953 -0.0625,0.03125c-0.25781,0.05859 -0.48437,0.21484 -0.625,0.4375l-7.25,10.875l-4.125,-4.9375c-0.34375,-0.43359 -0.97656,-0.5 -1.40625,-0.15625c-0.43359,0.34375 -0.5,0.97656 -0.15625,1.40625l5,6c0.19922,0.25391 0.50781,0.39844 0.82813,0.38672c0.32422,-0.01172 0.62109,-0.17969 0.79688,-0.44922l8,-12c0.25,-0.30859 0.29297,-0.73437 0.10938,-1.08594c-0.18359,-0.35547 -0.55859,-0.56641 -0.95312,-0.53906zM20,24v2h30v-2zM14,35.9375c-0.05469,0.00781 -0.10547,0.01563 -0.15625,0.03125c-0.01953,0.00781 -0.04297,0.01953 -0.0625,0.03125c-0.25781,0.05859 -0.48437,0.21484 -0.625,0.4375l-7.25,10.875l-4.125,-4.9375c-0.34375,-0.43359 -0.97656,-0.5 -1.40625,-0.15625c-0.43359,0.34375 -0.5,0.97656 -0.15625,1.40625l5,6c0.19922,0.25391 0.50781,0.39844 0.82813,0.38672c0.32422,-0.01172 0.62109,-0.17969 0.79688,-0.44922l8,-12c0.25,-0.30859 0.29297,-0.73437 0.10938,-1.08594c-0.18359,-0.35547 -0.55859,-0.56641 -0.95312,-0.53906zM20,43v2h30v-2z"></path></g></g>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_dropdown-selected" viewBox="0,0,256,256">
+            <g fill="#dc4c3e" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M20.98047,6.00391c-0.2598,0.00774 -0.50638,0.11632 -0.6875,0.30273l-11.2793,11.2793l-5.30664,-5.29297c-0.25082,-0.26124 -0.62327,-0.36647 -0.97371,-0.27511c-0.35044,0.09136 -0.62411,0.36503 -0.71547,0.71547c-0.09136,0.35044 0.01388,0.72289 0.27511,0.97371l6.01563,6c0.39031,0.38907 1.0218,0.38907 1.41211,0l11.98633,-11.98633c0.29576,-0.28749 0.38469,-0.72707 0.22393,-1.10691c-0.16075,-0.37985 -0.53821,-0.62204 -0.9505,-0.60988z"></path></g></g>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_project" viewBox="0,0,256,256">
+            <g fill="#302f2f" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M7.71289,2.95508c-0.41344,0.00647 -0.74367,0.34631 -0.73828,0.75977v3.25h-3.25c-0.27048,-0.00383 -0.52206,0.13828 -0.65842,0.3719c-0.13635,0.23362 -0.13635,0.52257 0,0.75619c0.13635,0.23362 0.38794,0.37573 0.65842,0.3719h3.25v6.4668h-3.0625c-0.27048,-0.00383 -0.52206,0.13828 -0.65842,0.3719c-0.13635,0.23362 -0.13635,0.52257 0,0.75619c0.13635,0.23362 0.38794,0.37573 0.65842,0.3719h3.0625v3.2832c-0.00383,0.27048 0.13828,0.52206 0.3719,0.65842c0.23362,0.13635 0.52257,0.13635 0.75619,0c0.23362,-0.13635 0.37573,-0.38794 0.3719,-0.65842v-3.2832h6v3.2832c-0.00383,0.27048 0.13828,0.52206 0.3719,0.65842c0.23362,0.13635 0.52257,0.13635 0.75619,0c0.23362,-0.13635 0.37573,-0.38794 0.3719,-0.65842v-3.2832h3.9375c0.27048,0.00383 0.52206,-0.13828 0.65842,-0.3719c0.13635,-0.23362 0.13635,-0.52257 0,-0.75619c-0.13635,-0.23362 -0.38794,-0.37573 -0.65842,-0.3719h-3.9375v-6.4668h3.75c0.27048,0.00383 0.52206,-0.13828 0.65842,-0.3719c0.13635,-0.23362 0.13635,-0.52257 0,-0.75619c-0.13635,-0.23362 -0.38794,-0.37573 -0.65842,-0.3719h-3.75v-3.25c0.00383,-0.27048 -0.13828,-0.52206 -0.3719,-0.65842c-0.23362,-0.13635 -0.52257,-0.13635 -0.75619,0c-0.23362,0.13635 -0.37573,0.38794 -0.3719,0.65842v3.25h-6v-3.25c0.00264,-0.20264 -0.07682,-0.39773 -0.22031,-0.54085c-0.14348,-0.14312 -0.33878,-0.22208 -0.54141,-0.21892zM8.47461,8.46484h6v6.4668h-6z"></path></g></g>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_snackbar-error" viewBox="0 0 48 48">
+            <path fill="#f44336" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path fill="#fff" d="M29.656,15.516l2.828,2.828l-14.14,14.14l-2.828-2.828L29.656,15.516z"></path><path fill="#fff" d="M32.484,29.656l-2.828,2.828l-14.14-14.14l2.828-2.828L32.484,29.656z"></path>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_snackbar-info" viewBox="0 0 48 48">
+            <path fill="#2196f3" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path fill="#fff" d="M22 22h4v11h-4V22zM26.5 16.5c0 1.379-1.121 2.5-2.5 2.5s-2.5-1.121-2.5-2.5S22.621 14 24 14 26.5 15.121 26.5 16.5z"></path>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_snackbar-check" viewBox="0 0 48 48">
+            <path fill="#c8e6c9" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path fill="#4caf50" d="M34.586,14.586l-13.57,13.586l-5.602-5.586l-2.828,2.828l8.434,8.414l16.395-16.414L34.586,14.586z"></path>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_snackbar-warning" viewBox="0 0 48 48">
+            <path fill="#ffca28" d="M44,24c0,11-9,20-20,20S4,35,4,24S13,4,24,4S44,13,44,24z"></path><path fill="#37474f" d="M26,27h-4V13h4V27z M22,33c0-1.1,0.9-2,2-2s2,0.9,2,2s-0.9,2-2,2S22,34.1,22,33z"></path>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_deadline"viewBox="0 0 24 24">
+            <path d="M 7 2 L 7 2.75 L 7 3 L 3 3 L 3 3.75 L 3 21 L 21 21 L 21 3 L 17 3 L 17 2.75 L 17 2 L 15.5 2 L 15.5 2.75 L 15.5 3 L 8.5 3 L 8.5 2.75 L 8.5 2 L 7 2 z M 4.5 4.5 L 7 4.5 L 7 5.25 L 7 6 L 8.5 6 L 8.5 5.25 L 8.5 4.5 L 15.5 4.5 L 15.5 5.25 L 15.5 6 L 17 6 L 17 5.25 L 17 4.5 L 19.5 4.5 L 19.5 8 L 4.5 8 L 4.5 4.5 z M 4.5 9.5 L 19.5 9.5 L 19.5 19.5 L 4.5 19.5 L 4.5 9.5 z"></path>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_priopity--outline" viewBox="0 0 24 24">
+            <path d="M 3 2 L 3 2.75 L 3 3.234375 L 3 15.505859 L 3 21.25 L 3 22 L 4.5 22 L 4.5 21.25 L 4.5 14.796875 C 5.0055015 14.572833 6.3707635 14.001953 7.875 14.001953 C 9.2603969 14.001953 10.126953 14.425781 11.158203 14.925781 C 12.189453 15.425781 13.385147 16.001953 15.09375 16.001953 C 17.389019 16.001953 20.472656 15.005859 20.472656 15.005859 L 21 14.841797 L 21 2.6699219 L 20.011719 3 C 20.011719 3 16.904053 4 15.09375 4 C 13.708353 4 12.84375 3.5742188 11.8125 3.0742188 C 10.78125 2.5742188 9.5836031 2 7.875 2 C 6.4795531 2 5.3365279 2.3278264 4.5 2.6269531 L 4.5 2 L 3 2 z M 7.875 3.5 C 9.2603969 3.5 10.126953 3.9257812 11.158203 4.4257812 C 12.189453 4.9257812 13.385147 5.5 15.09375 5.5 C 16.78256 5.5 18.490177 5.0247774 19.5 4.7148438 L 19.5 13.708984 C 18.798915 13.908389 16.651894 14.501953 15.09375 14.501953 C 13.708353 14.501953 12.84375 14.076172 11.8125 13.576172 C 10.78125 13.076172 9.5836031 12.501953 7.875 12.501953 C 6.4838019 12.501953 5.3404802 12.851535 4.5 13.173828 L 4.5 4.234375 C 5.0229937 4.0200517 6.3704333 3.5 7.875 3.5 z"></path>
+        </symbol>
+        
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_priopity--filled" viewBox="0 0 24 24">
+            <path d="M20.687,3.104c-0.195-0.143-0.447-0.181-0.676-0.103C19.981,3.011,17.008,4,15.094,4c-1.375,0-2.301-0.449-3.282-0.925	C10.772,2.571,9.594,2,7.875,2c-1.29,0-2.549,0.338-3.4,0.628C4.415,2.275,4.121,2,3.75,2C3.336,2,3,2.336,3,2.75v0.962v10.576	v6.962C3,21.664,3.336,22,3.75,22s0.75-0.336,0.75-0.75v-6.475C5.162,14.497,6.531,14,7.875,14c1.375,0,2.301,0.449,3.282,0.925	C12.196,15.429,13.375,16,15.094,16c2.151,0,5.248-0.955,5.379-0.996C20.786,14.907,21,14.616,21,14.288V3.712	C21,3.471,20.884,3.244,20.687,3.104z"></path>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_priopity--active" viewBox="0 0 24 24">
+            <path fill="#dc4c3e" d="M20.687,3.104c-0.195-0.143-0.447-0.181-0.676-0.103C19.981,3.011,17.008,4,15.094,4c-1.375,0-2.301-0.449-3.282-0.925	C10.772,2.571,9.594,2,7.875,2c-1.29,0-2.549,0.338-3.4,0.628C4.415,2.275,4.121,2,3.75,2C3.336,2,3,2.336,3,2.75v0.962v10.576	v6.962C3,21.664,3.336,22,3.75,22s0.75-0.336,0.75-0.75v-6.475C5.162,14.497,6.531,14,7.875,14c1.375,0,2.301,0.449,3.282,0.925	C12.196,15.429,13.375,16,15.094,16c2.151,0,5.248-0.955,5.379-0.996C20.786,14.907,21,14.616,21,14.288V3.712	C21,3.471,20.884,3.244,20.687,3.104z"></path>
+        </symbol>
+    </svg>
+    <svg style="display: none;">
+        <symbol id="icon_delete" viewBox="0,0,256,256">
+            <g fill="#302f2f" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M9.5,2c-0.245,0 -0.45414,0.17597 -0.49414,0.41797l-0.42969,2.58203h-6.07617c-0.276,-0.004 -0.50381,0.21619 -0.50781,0.49219c-0.004,0.276 0.21814,0.50381 0.49414,0.50781h0.01367h0.53125l0.91406,14.58984c0.048,0.787 0.71005,1.41016 1.49805,1.41016h13.11328c0.788,0 1.45105,-0.62316 1.49805,-1.41016v-0.00195l0.91406,-14.58789h0.53125c0.276,0.004 0.50381,-0.21619 0.50781,-0.49219c0.004,-0.276 -0.21814,-0.50381 -0.49414,-0.50781h-0.01367h-6.07617l-0.42969,-2.58203c-0.04,-0.242 -0.24914,-0.41797 -0.49414,-0.41797zM9.92383,3h4.15234l0.33203,2h-4.81641zM4.03125,6h3.93359h1.03516h5.99805h1.00195h3.96875l-0.91211,14.52734v0.00195c-0.016,0.27 -0.231,0.4707 -0.5,0.4707h-13.11328c-0.269,0 -0.484,-0.2027 -0.5,-0.4707v-0.00195zM8.47852,8.99414c-0.1951,0.00577 -0.36901,0.12453 -0.44539,0.30415c-0.07638,0.17962 -0.04127,0.38727 0.08993,0.53179l3.21094,3.66992l-3.21094,3.66992c-0.11795,0.13467 -0.15509,0.32204 -0.09743,0.49152c0.05766,0.16948 0.20137,0.29532 0.37698,0.3301c0.17561,0.03479 0.35644,-0.02677 0.47435,-0.16147l3.12305,-3.56836l3.12305,3.56836c0.1823,0.20819 0.49885,0.22917 0.70703,0.04688c0.20819,-0.1823 0.22917,-0.49885 0.04688,-0.70703l-3.21094,-3.66992l3.21094,-3.66992c0.11795,-0.13467 0.15509,-0.32204 0.09743,-0.49152c-0.05766,-0.16948 -0.20137,-0.29532 -0.37698,-0.3301c-0.17561,-0.03479 -0.35643,0.02676 -0.47435,0.16146l-3.12305,3.56836l-3.12305,-3.56836c-0.09898,-0.11639 -0.24575,-0.18113 -0.39844,-0.17578z"></path></g></g>
+        </symbol>
+    </svg>
+</body>
+
+
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+
+<script type="module" src="js/app.js"></script>
+
+</html>

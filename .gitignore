@@ -1,0 +1,11 @@
+.DS_Store
+dist/
+node_modules/
+.env
+.vscode/
+package*.json
+base/
+components/
+layout/
+utils/
+main.sass
